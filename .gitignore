@@ -1,1 +1,3 @@
 .*.swp
+/slapi
+/slapi.json
