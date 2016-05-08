@@ -1,0 +1,36 @@
+{
+        "id": "C165BUACU",
+        "name": "general",
+        "is_channel": true,
+        "created": 1462383037,
+        "creator": "U165E60A2",
+        "is_archived": false,
+        "is_general": true,
+        "is_member": true,
+        "last_read": "1462387257.000026",
+        "latest": {
+            "type": "message",
+            "user": "U165E60A2",
+            "text": "<@U165T1UMT>: thank you for spotting that.",
+            "ts": "1462387257.000026"
+        },
+        "unread_count": 42,
+        "unread_count_display": 24,
+        "members": [
+            "U165E60A2",
+            "U165N9BKJ",
+            "U165S54BF",
+            "U165T1UMT",
+            "U165XNKB3"
+        ],
+        "topic": {
+            "value": "Company-wide announcements and work-based matters",
+            "creator": "",
+            "last_set": 0
+        },
+        "purpose": {
+            "value": "This has no purpose.",
+            "creator": "U165E60A2",
+            "last_set": 1462380000
+        }
+}
