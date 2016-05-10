@@ -6,8 +6,8 @@ https://github.com/slackhq/slack-api-docs/issues/30#issuecomment-137582387
 */
 
 import (
-	"bitbucket.org/kormaton/slapi/config"
-	"bitbucket.org/kormaton/slapi/query"
+	"github.com/kormat/go-slackapi/config"
+	"github.com/kormat/go-slackapi/query"
 )
 
 func Invite(email string) bool {

@@ -1,7 +1,7 @@
 package channels
 
 import (
-	"bitbucket.org/kormaton/slapi/test"
+	"github.com/kormat/go-slackapi/test"
 	"io/ioutil"
 	"testing"
 )
@@ -31,8 +31,8 @@ func TestParseInfo(t *testing.T) {
 	tm.Eq("Unread count", 42, c.UnreadCount)
 	tm.Eq("Unread count display", 24, c.UnreadCountDisplay)
 	tm.Eq("Members", []string{"U165E60A2", "U165N9BKJ", "U165S54BF", "U165T1UMT", "U165XNKB3"}, c.Members)
-	tm.Eq("Topic", topicPurpose{"Company-wide announcements and work-based matters", "", 0}, c.Topic)
-	tm.Eq("Purpose", topicPurpose{"This has no purpose.", "U165E60A2", 1462380000}, c.Purpose)
+	tm.Eq("Topic", TopicPurpose{"Company-wide announcements and work-based matters", "", 0}, c.Topic)
+	tm.Eq("Purpose", TopicPurpose{"This has no purpose.", "U165E60A2", 1462380000}, c.Purpose)
 	if !tm.Ok {
 		t.Log(c.String())
 	}

@@ -1,9 +1,9 @@
 package cmd
 
 import (
-	"bitbucket.org/kormaton/slapi/users/admin"
 	"errors"
 	"fmt"
+	"github.com/kormat/go-slackapi/users/admin"
 )
 
 type UserInvite struct {

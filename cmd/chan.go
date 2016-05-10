@@ -1,9 +1,9 @@
 package cmd
 
 import (
-	"bitbucket.org/kormaton/slapi/channels"
 	"errors"
 	"fmt"
+	"github.com/kormat/go-slackapi/channels"
 )
 
 type ChanInfo struct {

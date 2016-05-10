@@ -1,9 +1,9 @@
 package query
 
 import (
-	"bitbucket.org/kormaton/slapi/config"
 	"fmt"
 	"github.com/golang/glog"
+	"github.com/kormat/go-slackapi/config"
 	"io/ioutil"
 	"net/http"
 	"net/url"

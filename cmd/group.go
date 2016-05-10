@@ -1,9 +1,9 @@
 package cmd
 
 import (
-	"bitbucket.org/kormaton/slapi/groups"
 	"errors"
 	"fmt"
+	"github.com/kormat/go-slackapi/groups"
 )
 
 type GroupInfo struct {

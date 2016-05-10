@@ -1,10 +1,10 @@
 package channels
 
 import (
-	"bitbucket.org/kormaton/slapi/config"
-	"bitbucket.org/kormaton/slapi/query"
 	"encoding/json"
 	"github.com/golang/glog"
+	"github.com/kormat/go-slackapi/config"
+	"github.com/kormat/go-slackapi/query"
 )
 
 type ChannelList struct {

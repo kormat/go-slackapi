@@ -1,9 +1,9 @@
 package cmd
 
 import (
-	"bitbucket.org/kormaton/slapi/users"
 	"errors"
 	"fmt"
+	"github.com/kormat/go-slackapi/users"
 )
 
 type UserInfo struct {

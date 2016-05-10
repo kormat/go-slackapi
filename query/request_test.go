@@ -1,7 +1,7 @@
 package query
 
 import (
-	"bitbucket.org/kormaton/slapi/config"
+	"github.com/kormat/go-slackapi/config"
 	"net/url"
 	"testing"
 )

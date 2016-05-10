@@ -1,13 +1,13 @@
 package cmd
 
 import (
-	"bitbucket.org/kormaton/slapi/config"
 	"flag"
 	"github.com/jessevdk/go-flags"
+	"github.com/kormat/go-slackapi/config"
 )
 
 type GlobalFlags struct {
-	Config func(string) `short:"c" long:"config" description:"Config file" default:"slapi.json"`
+	Config func(string) `short:"c" long:"config" description:"Config file" default:"slackapi.json"`
 }
 
 var globalFlags GlobalFlags

@@ -1,8 +1,8 @@
 package groups
 
 import (
-	"bitbucket.org/kormaton/slapi/config"
-	"bitbucket.org/kormaton/slapi/query"
+	"github.com/kormat/go-slackapi/config"
+	"github.com/kormat/go-slackapi/query"
 )
 
 func Kick(channel, user string) bool {
