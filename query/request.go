@@ -1,24 +1,24 @@
 package query
 
 import (
-	"flag"
+	"bitbucket.org/kormaton/slapi/config"
 	"fmt"
 	"github.com/golang/glog"
 	"io/ioutil"
 	"net/http"
 	"net/url"
+	"os"
 )
 
-var base_url = flag.String("query.url", "https://slack.com/api", "Remote API endpoint")
-
-var tr = &http.Transport{}
-var client = &http.Client{Transport: tr}
-
-type params map[string]string
+var client = &http.Client{}
 
 func Request(cmd string, v url.Values) (Response, bool) {
 	u := CreateURL(cmd, v)
 	glog.Infof("Request: %#v", u.String())
+	if v.Get("token") == "" {
+		glog.Errorf("query: No token specified")
+		os.Exit(1)
+	}
 	resp, err := client.Get(u.String())
 	if err != nil {
 		return Response{}, false
@@ -33,7 +33,12 @@ func Request(cmd string, v url.Values) (Response, bool) {
 }
 
 func CreateURL(cmd string, v url.Values) *url.URL {
-	u, err := url.Parse(*base_url)
+	base := config.Config.APIEndpoint
+	if len(base) == 0 {
+		glog.Error("API Endpoint url is empty")
+		os.Exit(1)
+	}
+	u, err := url.Parse(config.Config.APIEndpoint)
 	if err != nil {
 		glog.Error("Unable to parse API endpoint url: %v", err)
 		return nil

@@ -24,10 +24,10 @@ func TestParseInfo(t *testing.T) {
 	tm.Eq("Archived flag", false, c.IsArchived)
 	tm.Eq("General flag", true, c.IsGeneral)
 	tm.Eq("Member flag", true, c.IsMember)
-	tm.Eq("Last read", "1462387257.000026", c.LastRead)
+	tm.Eq("Last read", 1462387257.000026, c.LastRead)
 	tm.Eq("Latest", latest{
 		"message", "U165E60A2", "<@U165T1UMT>: thank you for spotting that.",
-		"1462387257.000026"}, c.Latest)
+		1462387257.000026}, c.Latest)
 	tm.Eq("Unread count", 42, c.UnreadCount)
 	tm.Eq("Unread count display", 24, c.UnreadCountDisplay)
 	tm.Eq("Members", []string{"U165E60A2", "U165N9BKJ", "U165S54BF", "U165T1UMT", "U165XNKB3"}, c.Members)

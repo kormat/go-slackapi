@@ -6,7 +6,6 @@ import (
 	"encoding/json"
 	"github.com/golang/glog"
 	"github.com/kr/pretty"
-	"net/url"
 )
 
 type ChannelInfo struct {
@@ -20,8 +19,8 @@ type ChannelInfo struct {
 	Members            []string
 	Topic              topicPurpose
 	Purpose            topicPurpose
-	IsMember           bool   `json:"is_member"`
-	LastRead           string `json:"last_read"`
+	IsMember           bool    `json:"is_member"`
+	LastRead           float64 `json:"last_read,string"`
 	Latest             latest
 	UnreadCount        int `json:"unread_count"`
 	UnreadCountDisplay int `json:"unread_count_display"`
@@ -37,7 +36,20 @@ type latest struct {
 	Type string
 	User string
 	Text string
-	TS   string
+	TS   float64 `json:",string"`
+}
+
+func Info(id string) (ChannelInfo, bool) {
+	resp, ok := query.Request("channels.info",
+		config.MakeURLValues(map[string]string{"channel": id}))
+	if !ok || !resp.Ok {
+		return ChannelInfo{}, false
+	}
+	c, ok := parseInfo(*resp.Channel)
+	if !ok {
+		return ChannelInfo{}, false
+	}
+	return c, true
 }
 
 func parseInfo(data []byte) (ChannelInfo, bool) {
@@ -52,20 +64,4 @@ func parseInfo(data []byte) (ChannelInfo, bool) {
 
 func (c ChannelInfo) String() string {
 	return pretty.Sprint(c)
-}
-
-func Info(id string) (ChannelInfo, bool) {
-	cfg := config.Load()
-	v := url.Values{}
-	v.Set("token", cfg.Token)
-	v.Set("channel", id)
-	resp, ok := query.Request("channels.info", v)
-	if !ok || !resp.Ok {
-		return ChannelInfo{}, false
-	}
-	c, ok := parseInfo(*resp.Channel)
-	if !ok {
-		return ChannelInfo{}, false
-	}
-	return c, true
 }

@@ -5,7 +5,6 @@ import (
 	"bitbucket.org/kormaton/slapi/query"
 	"encoding/json"
 	"github.com/golang/glog"
-	"net/url"
 )
 
 type ChannelList struct {
@@ -23,10 +22,7 @@ func parseList(data []byte) (ChannelList, bool) {
 }
 
 func List() ([]ChannelInfo, bool) {
-	cfg := config.Load()
-	v := url.Values{}
-	v.Set("token", cfg.Token)
-	resp, ok := query.Request("channels.list", v)
+	resp, ok := query.Request("channels.list", config.MakeURLValues(map[string]string{}))
 	if !ok || !resp.Ok {
 		return []ChannelInfo{}, false
 	}
