@@ -12,6 +12,9 @@ type Response struct {
 	Error    *string
 	Channel  *json.RawMessage
 	Channels *json.RawMessage
+	CacheTS  *int `json:"cache_ts"`
+	Members  *json.RawMessage
+	User     *json.RawMessage
 }
 
 /* bool return is for json decoding */
