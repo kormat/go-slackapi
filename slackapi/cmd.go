@@ -1,10 +1,10 @@
-package cmd
+package main
 
 import (
 	"os"
 )
 
-func Parse() {
+func main() {
 	if _, err := parser.Parse(); err != nil {
 		os.Exit(1)
 	}
