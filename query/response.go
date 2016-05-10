@@ -7,12 +7,16 @@ import (
 )
 
 type Response struct {
-	Ok       bool
-	Warning  *string
-	Error    *string
+	// Meta data
+	Ok      bool
+	Warning *string
+	Error   *string
+	CacheTS *int `json:"cache_ts"`
+	// Body
 	Channel  *json.RawMessage
 	Channels *json.RawMessage
-	CacheTS  *int `json:"cache_ts"`
+	Group    *json.RawMessage
+	Groups   *json.RawMessage
 	Members  *json.RawMessage
 	User     *json.RawMessage
 }

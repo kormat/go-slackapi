@@ -34,7 +34,7 @@ func List() ([]UserInfo, bool) {
 	for i, rawInfo := range ul.Users {
 		c, ok := parseInfo(rawInfo)
 		if !ok {
-			glog.Errorf("Error parsing channel %d", i)
+			glog.Errorf("Error parsing user %d", i)
 			return []UserInfo{}, false
 		}
 		infos = append(infos, c)

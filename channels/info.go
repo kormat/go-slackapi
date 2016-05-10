@@ -17,8 +17,8 @@ type ChannelInfo struct {
 	IsArchived         bool `json:"is_archived"`
 	IsGeneral          bool `json:"is_general"`
 	Members            []string
-	Topic              topicPurpose
-	Purpose            topicPurpose
+	Topic              TopicPurpose
+	Purpose            TopicPurpose
 	IsMember           bool    `json:"is_member"`
 	LastRead           float64 `json:"last_read,string"`
 	Latest             latest
@@ -26,7 +26,7 @@ type ChannelInfo struct {
 	UnreadCountDisplay int `json:"unread_count_display"`
 }
 
-type topicPurpose struct {
+type TopicPurpose struct {
 	Value   string
 	Creator string
 	LastSet int `json:"last_set"`
