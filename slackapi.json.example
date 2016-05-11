@@ -1,3 +1,5 @@
 {
-    "token": "XXXXXXXXXXXXXXXX"
+    "token": "XXXXXXXXXXXXXXXX",
+	"APIEndPoint": "https://slack.com/api",
+	"GlogFlags" : ["-alsologtostderr", "-v", "3"]
 }

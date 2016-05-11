@@ -7,8 +7,9 @@ import (
 )
 
 func TestCreateUrl(t *testing.T) {
-	// FIXME(kormat): this is a hack, until i figure out how to mock things in Go.
-	config.Config.APIEndpoint = "http://api.endpoint"
+	old := config.Cfg
+	defer func() { config.Cfg = old }()
+	config.Cfg = &config.Config{APIEndpoint: "http://api.endpoint"}
 	cases := []struct {
 		in_cmd string
 		in_v   url.Values

@@ -33,12 +33,12 @@ func Request(cmd string, v url.Values) (Response, bool) {
 }
 
 func CreateURL(cmd string, v url.Values) *url.URL {
-	base := config.Config.APIEndpoint
+	base := config.Cfg.APIEndpoint
 	if len(base) == 0 {
 		glog.Error("API Endpoint url is empty")
 		os.Exit(1)
 	}
-	u, err := url.Parse(config.Config.APIEndpoint)
+	u, err := url.Parse(config.Cfg.APIEndpoint)
 	if err != nil {
 		glog.Error("Unable to parse API endpoint url: %v", err)
 		return nil
