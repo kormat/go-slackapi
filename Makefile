@@ -2,7 +2,7 @@
 
 GOFLAGS ?= $(GOFLAGS:)
 
-all: build
+all: build install
 
 
 build:

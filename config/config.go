@@ -45,6 +45,7 @@ func Load(path string) {
 func MakeURLValues(values map[string]string) url.Values {
 	v := url.Values{}
 	v.Set("token", Cfg.Token)
+	v.Set("pretty", "1")
 	for key, val := range values {
 		v.Set(key, val)
 	}

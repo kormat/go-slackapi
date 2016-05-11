@@ -1,3 +1,4 @@
 .*.swp
 /slackapi/slackapi
 /slackapi.json
+/logs/*
