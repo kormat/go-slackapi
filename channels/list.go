@@ -1,43 +1,27 @@
 package channels
 
 import (
-	"encoding/json"
-	"github.com/golang/glog"
 	"github.com/kormat/go-slackapi/config"
 	"github.com/kormat/go-slackapi/query"
+	"github.com/kormat/go-slackapi/util"
 )
 
-type ChannelList struct {
-	Channels []json.RawMessage
-}
-
-func parseList(data []byte) (ChannelList, bool) {
-	var l ChannelList
-	err := json.Unmarshal(data, &l.Channels)
+func List() ([]ChannelInfo, error) {
+	resp, err := query.Request("channels.list", config.MakeURLValues(map[string]string{}))
 	if err != nil {
-		glog.Errorf("channels.list: Error parsing json: %v", err)
-		return ChannelList{}, false
+		return []ChannelInfo{}, err
 	}
-	return l, true
-}
-
-func List() ([]ChannelInfo, bool) {
-	resp, ok := query.Request("channels.list", config.MakeURLValues(map[string]string{}))
-	if !ok || !resp.Ok {
-		return []ChannelInfo{}, false
-	}
-	cl, ok := parseList(*resp.Channels)
-	if !ok {
-		return []ChannelInfo{}, false
+	chans, err := util.ParseJSONList(*resp.Channels)
+	if err != nil {
+		return []ChannelInfo{}, util.Error("channels.list: %v", err)
 	}
 	var infos []ChannelInfo
-	for i, rawInfo := range cl.Channels {
-		c, ok := parseInfo(rawInfo)
-		if !ok {
-			glog.Errorf("Error parsing channel %d", i)
-			return []ChannelInfo{}, false
+	for i, rawInfo := range chans {
+		c, err := parseInfo(rawInfo)
+		if err != nil {
+			return []ChannelInfo{}, util.Error("Error parsing channel %d", i)
 		}
 		infos = append(infos, c)
 	}
-	return infos, true
+	return infos, nil
 }

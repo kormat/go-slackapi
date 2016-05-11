@@ -5,11 +5,8 @@ import (
 	"github.com/kormat/go-slackapi/query"
 )
 
-func Invite(channel, user string) bool {
-	r, ok := query.Request("channels.invite",
+func Invite(channel, user string) error {
+	_, err := query.Request("channels.invite",
 		config.MakeURLValues(map[string]string{"channel": channel, "user": user}))
-	if !ok || !r.Ok {
-		return false
-	}
-	return true
+	return err
 }

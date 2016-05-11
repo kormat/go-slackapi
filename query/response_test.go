@@ -21,11 +21,7 @@ func TestParseResponse(t *testing.T) {
 	}
 	for i, c := range cases {
 		pass := true
-		got, ok := Parse(c.in)
-		if !ok {
-			t.Errorf("Case %d. Error parsing json", i)
-			pass = false
-		}
+		got, _ := Parse(c.in)
 		if c.ok != got.Ok {
 			t.Errorf("Case %d. Ok: Expected %v Got %v", i, c.ok, got.Ok)
 			pass = false

@@ -3,6 +3,7 @@ package query
 import (
 	"encoding/json"
 	"github.com/golang/glog"
+	"github.com/kormat/go-slackapi/util"
 	"github.com/kr/pretty"
 )
 
@@ -22,20 +23,19 @@ type Response struct {
 }
 
 /* bool return is for json decoding */
-func Parse(data []byte) (Response, bool) {
+func Parse(data []byte) (Response, error) {
 	var r Response
 	err := json.Unmarshal(data, &r)
 	if err != nil {
-		glog.Errorf("Unable to parse response: %v", err)
-		return Response{}, false
+		return Response{}, util.Error("query: unable to parse response json: %v", err)
 	}
 	if r.Error != nil {
-		glog.Errorf("Error response from API: %s", *r.Error)
+		err = util.Error("query: api error: %s", *r.Error)
 	}
 	if r.Warning != nil {
-		glog.Warningf("Warning response from API: %s", *r.Warning)
+		glog.Warningf("query: api warning: %s", *r.Warning)
 	}
-	return r, true
+	return r, err
 }
 
 func (r *Response) String() string {

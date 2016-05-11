@@ -1,7 +1,6 @@
 package main
 
 import (
-	"errors"
 	"fmt"
 	"github.com/kormat/go-slackapi/config"
 	"github.com/kormat/go-slackapi/groups"
@@ -40,9 +39,9 @@ func (g *GroupInfo) Execute(_ []string) error {
 	if config.CfgErr != nil {
 		return config.CfgErr
 	}
-	info, ok := groups.Info(g.Args.ID)
-	if !ok {
-		return errors.New("groups.info failure")
+	info, err := groups.Info(g.Args.ID)
+	if err != nil {
+		return err
 	}
 	fmt.Println(info)
 	return nil
@@ -52,9 +51,9 @@ func (gl *GroupList) Execute(_ []string) error {
 	if config.CfgErr != nil {
 		return config.CfgErr
 	}
-	glist, ok := groups.List()
-	if !ok {
-		return errors.New("groups.list failure")
+	glist, err := groups.List()
+	if err != nil {
+		return err
 	}
 	for i, g := range glist {
 		fmt.Printf("%d. `%s` (Id: %s)\n", i, g.Name, g.Id)
@@ -66,22 +65,12 @@ func (g *GroupInvite) Execute(_ []string) error {
 	if config.CfgErr != nil {
 		return config.CfgErr
 	}
-	ok := groups.Invite(g.Args.Group, g.Args.User)
-	if !ok {
-		return errors.New("groups.invite failure")
-	}
-	fmt.Println("Success.")
-	return nil
+	return groups.Invite(g.Args.Group, g.Args.User)
 }
 
 func (g *GroupKick) Execute(_ []string) error {
 	if config.CfgErr != nil {
 		return config.CfgErr
 	}
-	ok := groups.Kick(g.Args.Group, g.Args.User)
-	if !ok {
-		return errors.New("groups.kick failure")
-	}
-	fmt.Println("Success.")
-	return nil
+	return groups.Kick(g.Args.Group, g.Args.User)
 }

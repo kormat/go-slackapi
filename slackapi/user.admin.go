@@ -1,8 +1,6 @@
 package main
 
 import (
-	"errors"
-	"fmt"
 	"github.com/kormat/go-slackapi/config"
 	"github.com/kormat/go-slackapi/users/admin"
 )
@@ -23,10 +21,5 @@ func (ui *UserInvite) Execute(_ []string) error {
 	if config.CfgErr != nil {
 		return config.CfgErr
 	}
-	ok := uadmin.Invite(ui.Args.Email)
-	if !ok {
-		return errors.New("users.admin.invite failure")
-	}
-	fmt.Println("Success.")
-	return nil
+	return uadmin.Invite(ui.Args.Email)
 }

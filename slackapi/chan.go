@@ -1,7 +1,6 @@
 package main
 
 import (
-	"errors"
 	"fmt"
 	"github.com/kormat/go-slackapi/channels"
 	"github.com/kormat/go-slackapi/config"
@@ -40,9 +39,9 @@ func (c *ChanInfo) Execute(_ []string) error {
 	if config.CfgErr != nil {
 		return config.CfgErr
 	}
-	info, ok := channels.Info(c.Args.ID)
-	if !ok {
-		return errors.New("channels.info failure")
+	info, err := channels.Info(c.Args.ID)
+	if err != nil {
+		return err
 	}
 	fmt.Println(info)
 	return nil
@@ -52,9 +51,9 @@ func (c *ChanList) Execute(_ []string) error {
 	if config.CfgErr != nil {
 		return config.CfgErr
 	}
-	chans, ok := channels.List()
-	if !ok {
-		return errors.New("Failed to get channel list")
+	chans, err := channels.List()
+	if err != nil {
+		return err
 	}
 	for i, c := range chans {
 		fmt.Printf("%d. `%s` (Id: %s)\n", i, c.Name, c.Id)
@@ -63,19 +62,9 @@ func (c *ChanList) Execute(_ []string) error {
 }
 
 func (c *ChanInvite) Execute(_ []string) error {
-	ok := channels.Invite(c.Args.Channel, c.Args.User)
-	if !ok {
-		return errors.New("channels.invite failure")
-	}
-	fmt.Println("Success.")
-	return nil
+	return channels.Invite(c.Args.Channel, c.Args.User)
 }
 
 func (c *ChanKick) Execute(_ []string) error {
-	ok := channels.Kick(c.Args.Channel, c.Args.User)
-	if !ok {
-		return errors.New("channels.kick failure")
-	}
-	fmt.Println("Success.")
-	return nil
+	return channels.Kick(c.Args.Channel, c.Args.User)
 }

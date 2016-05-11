@@ -12,8 +12,8 @@ func TestParseInfo(t *testing.T) {
 		t.Errorf("Unable to read file")
 	}
 	var tm = test.TestMeta{t, true}
-	c, ok := parseInfo(input)
-	if !ok {
+	c, err := parseInfo(input)
+	if err != nil {
 		t.Fatalf("Unable to parse file: %v", err)
 	}
 	tm.Eq("ID", "C165BUACU", c.Id)

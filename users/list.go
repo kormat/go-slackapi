@@ -1,43 +1,27 @@
 package users
 
 import (
-	"encoding/json"
-	"github.com/golang/glog"
 	"github.com/kormat/go-slackapi/config"
 	"github.com/kormat/go-slackapi/query"
+	"github.com/kormat/go-slackapi/util"
 )
 
-type UserList struct {
-	Users []json.RawMessage
-}
-
-func parseList(data []byte) (UserList, bool) {
-	var l UserList
-	err := json.Unmarshal(data, &l.Users)
+func List() ([]UserInfo, error) {
+	resp, err := query.Request("users.list", config.MakeURLValues(map[string]string{}))
 	if err != nil {
-		glog.Errorf("users.list: Error parsing json: %v", err)
-		return UserList{}, false
+		return []UserInfo{}, err
 	}
-	return l, true
-}
-
-func List() ([]UserInfo, bool) {
-	resp, ok := query.Request("users.list", config.MakeURLValues(map[string]string{}))
-	if !ok || !resp.Ok {
-		return []UserInfo{}, false
-	}
-	ul, ok := parseList(*resp.Members)
-	if !ok {
-		return []UserInfo{}, false
+	users, err := util.ParseJSONList(*resp.Members)
+	if err != nil {
+		return []UserInfo{}, util.Error("users.list: %v", err)
 	}
 	var infos []UserInfo
-	for i, rawInfo := range ul.Users {
-		c, ok := parseInfo(rawInfo)
-		if !ok {
-			glog.Errorf("Error parsing user %d", i)
-			return []UserInfo{}, false
+	for i, rawInfo := range users {
+		u, err := parseInfo(rawInfo)
+		if err != nil {
+			return []UserInfo{}, util.Error("Error parsing user %d", i)
 		}
-		infos = append(infos, c)
+		infos = append(infos, u)
 	}
-	return infos, true
+	return infos, nil
 }

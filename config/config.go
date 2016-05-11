@@ -1,10 +1,10 @@
 package config
 
 import (
-	"encoding/json"
 	"errors"
 	"flag"
 	"fmt"
+	"github.com/kormat/go-slackapi/util"
 	"io/ioutil"
 	"net/url"
 )
@@ -26,8 +26,7 @@ func Load(path string) {
 		return
 	}
 	Cfg = &Config{}
-	err = json.Unmarshal(input, Cfg)
-	if err != nil {
+	if util.ParseJSON(input, Cfg) != nil {
 		CfgErr = errors.New(fmt.Sprintf("config: JSON parsing failure: %v", err))
 		return
 	}

@@ -1,11 +1,10 @@
 package groups
 
 import (
-	"encoding/json"
-	"github.com/golang/glog"
 	"github.com/kormat/go-slackapi/channels"
 	"github.com/kormat/go-slackapi/config"
 	"github.com/kormat/go-slackapi/query"
+	"github.com/kormat/go-slackapi/util"
 	"github.com/kr/pretty"
 )
 
@@ -22,27 +21,21 @@ type GroupInfo struct {
 	Purpose    channels.TopicPurpose
 }
 
-func Info(id string) (GroupInfo, bool) {
-	resp, ok := query.Request("groups.info",
+func Info(id string) (GroupInfo, error) {
+	resp, err := query.Request("groups.info",
 		config.MakeURLValues(map[string]string{"channel": id}))
-	if !ok || !resp.Ok {
-		return GroupInfo{}, false
+	if err != nil {
+		return GroupInfo{}, err
 	}
-	c, ok := parseInfo(*resp.Group)
-	if !ok {
-		return GroupInfo{}, false
-	}
-	return c, true
+	return parseInfo(*resp.Group)
 }
 
-func parseInfo(data []byte) (GroupInfo, bool) {
+func parseInfo(raw []byte) (GroupInfo, error) {
 	var g GroupInfo
-	err := json.Unmarshal(data, &g)
-	if err != nil {
-		glog.Errorf("groups.info: Error parsing json: %v", err)
-		return GroupInfo{}, false
+	if err := util.ParseJSON(raw, &g); err != nil {
+		return GroupInfo{}, util.Error("groups.info: %v", err)
 	}
-	return g, true
+	return g, nil
 }
 
 func (g GroupInfo) String() string {

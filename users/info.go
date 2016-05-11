@@ -1,10 +1,9 @@
 package users
 
 import (
-	"encoding/json"
-	"github.com/golang/glog"
 	"github.com/kormat/go-slackapi/config"
 	"github.com/kormat/go-slackapi/query"
+	"github.com/kormat/go-slackapi/util"
 	"github.com/kr/pretty"
 )
 
@@ -38,27 +37,21 @@ type userProfile struct {
 	Email              string
 }
 
-func Info(id string) (UserInfo, bool) {
-	resp, ok := query.Request("users.info",
+func Info(id string) (UserInfo, error) {
+	resp, err := query.Request("users.info",
 		config.MakeURLValues(map[string]string{"user": id}))
-	if !ok || !resp.Ok {
-		return UserInfo{}, false
+	if err != nil {
+		return UserInfo{}, err
 	}
-	u, ok := parseInfo(*resp.User)
-	if !ok {
-		return UserInfo{}, false
-	}
-	return u, true
+	return parseInfo(*resp.User)
 }
 
-func parseInfo(data []byte) (UserInfo, bool) {
+func parseInfo(raw []byte) (UserInfo, error) {
 	var u UserInfo
-	err := json.Unmarshal(data, &u)
-	if err != nil {
-		glog.Errorf("users.info: Error parsing json: %v", err)
-		return UserInfo{}, false
+	if err := util.ParseJSON(raw, &u); err != nil {
+		return UserInfo{}, util.Error("users.info: %v", err)
 	}
-	return u, true
+	return u, nil
 }
 
 func (u UserInfo) String() string {

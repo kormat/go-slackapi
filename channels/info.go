@@ -1,10 +1,9 @@
 package channels
 
 import (
-	"encoding/json"
-	"github.com/golang/glog"
 	"github.com/kormat/go-slackapi/config"
 	"github.com/kormat/go-slackapi/query"
+	"github.com/kormat/go-slackapi/util"
 	"github.com/kr/pretty"
 )
 
@@ -39,27 +38,21 @@ type latest struct {
 	TS   float64 `json:",string"`
 }
 
-func Info(id string) (ChannelInfo, bool) {
-	resp, ok := query.Request("channels.info",
+func Info(id string) (ChannelInfo, error) {
+	resp, err := query.Request("channels.info",
 		config.MakeURLValues(map[string]string{"channel": id}))
-	if !ok || !resp.Ok {
-		return ChannelInfo{}, false
+	if err != nil {
+		return ChannelInfo{}, err
 	}
-	c, ok := parseInfo(*resp.Channel)
-	if !ok {
-		return ChannelInfo{}, false
-	}
-	return c, true
+	return parseInfo(*resp.Channel)
 }
 
-func parseInfo(data []byte) (ChannelInfo, bool) {
+func parseInfo(raw []byte) (ChannelInfo, error) {
 	var c ChannelInfo
-	err := json.Unmarshal(data, &c)
-	if err != nil {
-		glog.Errorf("channels.info: Error parsing json: %v", err)
-		return ChannelInfo{}, false
+	if err := util.ParseJSON(raw, &c); err != nil {
+		return ChannelInfo{}, util.Error("channels.info: %v", err)
 	}
-	return c, true
+	return c, nil
 }
 
 func (c ChannelInfo) String() string {

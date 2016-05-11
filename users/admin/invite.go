@@ -10,11 +10,8 @@ import (
 	"github.com/kormat/go-slackapi/query"
 )
 
-func Invite(email string) bool {
-	r, ok := query.Request("users.admin.invite",
+func Invite(email string) error {
+	_, err := query.Request("users.admin.invite",
 		config.MakeURLValues(map[string]string{"email": email}))
-	if !ok || !r.Ok {
-		return false
-	}
-	return true
+	return err
 }
