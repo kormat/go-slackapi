@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/kormat/go-slackapi/channels"
+	"github.com/kormat/go-slackapi/config"
 )
 
 type ChanInfo struct {
@@ -36,6 +37,9 @@ func init() {
 }
 
 func (c *ChanInfo) Execute(_ []string) error {
+	if config.CfgErr != nil {
+		return config.CfgErr
+	}
 	info, ok := channels.Info(c.Args.ID)
 	if !ok {
 		return errors.New("channels.info failure")
@@ -45,6 +49,9 @@ func (c *ChanInfo) Execute(_ []string) error {
 }
 
 func (c *ChanList) Execute(_ []string) error {
+	if config.CfgErr != nil {
+		return config.CfgErr
+	}
 	chans, ok := channels.List()
 	if !ok {
 		return errors.New("Failed to get channel list")

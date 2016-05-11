@@ -2,11 +2,11 @@ package config
 
 import (
 	"encoding/json"
+	"errors"
 	"flag"
-	"github.com/golang/glog"
+	"fmt"
 	"io/ioutil"
 	"net/url"
-	"os"
 )
 
 type Config struct {
@@ -16,30 +16,29 @@ type Config struct {
 }
 
 var Cfg *Config
-
+var CfgErr error
 var defAPIEndpoint = "https://slack.com/api"
 
 func Load(path string) {
-	glog.V(1).Infof("config: Loading from %#v", path)
 	input, err := ioutil.ReadFile(path)
 	if err != nil {
-		glog.Errorf("config: Error reading file: %v", err)
-		os.Exit(1)
+		CfgErr = errors.New(fmt.Sprintf("config: Error reading file: %v", err))
+		return
 	}
 	Cfg = &Config{}
 	err = json.Unmarshal(input, Cfg)
 	if err != nil {
-		glog.Errorf("config: JSON parsing failure: %v", err)
-		os.Exit(1)
+		CfgErr = errors.New(fmt.Sprintf("config: JSON parsing failure: %v", err))
+		return
 	}
+	flag.CommandLine.Parse(Cfg.GlogFlags)
 	if len(Cfg.Token) == 0 {
-		glog.Errorf("config: No token specified.")
-		os.Exit(1)
+		CfgErr = errors.New(fmt.Sprintf("config: No token specified."))
+		return
 	}
 	if len(Cfg.APIEndpoint) == 0 {
 		Cfg.APIEndpoint = defAPIEndpoint
 	}
-	flag.CommandLine.Parse(Cfg.GlogFlags)
 }
 
 func MakeURLValues(values map[string]string) url.Values {

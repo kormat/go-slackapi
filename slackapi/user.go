@@ -3,6 +3,7 @@ package main
 import (
 	"errors"
 	"fmt"
+	"github.com/kormat/go-slackapi/config"
 	"github.com/kormat/go-slackapi/users"
 )
 
@@ -22,6 +23,9 @@ func init() {
 }
 
 func (u *UserInfo) Execute(_ []string) error {
+	if config.CfgErr != nil {
+		return config.CfgErr
+	}
 	info, ok := users.Info(u.Args.ID)
 	if !ok {
 		return errors.New("users.info failure")
@@ -31,6 +35,9 @@ func (u *UserInfo) Execute(_ []string) error {
 }
 
 func (ul *UserList) Execute(_ []string) error {
+	if config.CfgErr != nil {
+		return config.CfgErr
+	}
 	ulist, ok := users.List()
 	if !ok {
 		return errors.New("users.list failure")

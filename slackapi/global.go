@@ -13,7 +13,5 @@ var globalFlags GlobalFlags
 var parser = flags.NewParser(&globalFlags, flags.Default)
 
 func init() {
-	globalFlags.Config = func(path string) {
-		config.Load(path)
-	}
+	globalFlags.Config = config.Load
 }
