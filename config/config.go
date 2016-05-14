@@ -18,6 +18,7 @@ type Config struct {
 var Cfg *Config
 var CfgErr error
 var defAPIEndpoint = "https://slack.com/api"
+var configured = false
 
 func Load(path string) {
 	input, err := ioutil.ReadFile(path)
@@ -38,9 +39,24 @@ func Load(path string) {
 	if len(Cfg.APIEndpoint) == 0 {
 		Cfg.APIEndpoint = defAPIEndpoint
 	}
+	configured = true
+}
+
+func Set(cfg *Config) {
+	if len(cfg.Token) == 0 {
+		panic("slackapi.config: No token specified.")
+	}
+	if len(cfg.APIEndpoint) == 0 {
+		cfg.APIEndpoint = defAPIEndpoint
+	}
+	Cfg = cfg
+	configured = true
 }
 
 func MakeURLValues(values map[string]string) url.Values {
+	if !configured {
+		panic("slackapi.config: slackapi not configured")
+	}
 	v := url.Values{}
 	v.Set("token", Cfg.Token)
 	v.Set("pretty", "1")
