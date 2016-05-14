@@ -42,7 +42,7 @@ func (ul *UserList) Execute(_ []string) error {
 		return err
 	}
 	for i, u := range ulist {
-		fmt.Printf("%d. `%s` (Id: %s)\n", i, u.Name, u.Id)
+		fmt.Printf("%d. `%s` (Id: %s)\n", i, u.Name, u.ID)
 	}
 	return nil
 }

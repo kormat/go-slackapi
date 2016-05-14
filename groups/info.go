@@ -9,7 +9,7 @@ import (
 )
 
 type GroupInfo struct {
-	Id         string
+	ID         string
 	Name       string
 	IsGroup    bool `json:"is_group"`
 	Created    int

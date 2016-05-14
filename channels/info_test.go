@@ -16,7 +16,7 @@ func TestParseInfo(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Unable to parse file: %v", err)
 	}
-	tm.Eq("ID", "C165BUACU", c.Id)
+	tm.Eq("ID", "C165BUACU", c.ID)
 	tm.Eq("Name", "general", c.Name)
 	tm.Eq("Channel flag", true, c.IsChannel)
 	tm.Eq("Created", 1462383037, c.Created)

@@ -56,7 +56,7 @@ func (c *ChanList) Execute(_ []string) error {
 		return err
 	}
 	for i, c := range chans {
-		fmt.Printf("%d. `%s` (Id: %s)\n", i, c.Name, c.Id)
+		fmt.Printf("%d. `%s` (Id: %s)\n", i, c.Name, c.ID)
 	}
 	return nil
 }

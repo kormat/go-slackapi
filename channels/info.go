@@ -8,7 +8,7 @@ import (
 )
 
 type ChannelInfo struct {
-	Id                 string
+	ID                 string
 	Name               string
 	IsChannel          bool `json:"is_channel"`
 	Created            int

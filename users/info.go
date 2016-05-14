@@ -8,7 +8,7 @@ import (
 )
 
 type UserInfo struct {
-	Id                string
+	ID                string
 	TeamID            string `json:"team_id"`
 	Name              string
 	Deleted           bool

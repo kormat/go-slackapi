@@ -56,7 +56,7 @@ func (gl *GroupList) Execute(_ []string) error {
 		return err
 	}
 	for i, g := range glist {
-		fmt.Printf("%d. `%s` (Id: %s)\n", i, g.Name, g.Id)
+		fmt.Printf("%d. `%s` (Id: %s)\n", i, g.Name, g.ID)
 	}
 	return nil
 }
