@@ -21,7 +21,7 @@ func TestParseResponse(t *testing.T) {
 	}
 	for i, c := range cases {
 		pass := true
-		got, _ := Parse(c.in)
+		got, _ := parseResponse(c.in)
 		if c.ok != got.Ok {
 			t.Errorf("Case %d. Ok: Expected %v Got %v", i, c.ok, got.Ok)
 			pass = false

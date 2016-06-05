@@ -30,7 +30,7 @@ func Request(cmd string, v url.Values) (Response, error) {
 		return Response{}, util.Error("query: error reading http response body: %v", err)
 	}
 	glog.V(1).Infof("request: http response body:\n%s", body)
-	return Parse(body)
+	return parseResponse(body)
 }
 
 func createURL(cmd string, v url.Values) (*url.URL, error) {

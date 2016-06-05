@@ -22,8 +22,7 @@ type Response struct {
 	User     *json.RawMessage
 }
 
-/* bool return is for json decoding */
-func Parse(data []byte) (Response, error) {
+func parseResponse(data []byte) (Response, error) {
 	var r Response
 	err := json.Unmarshal(data, &r)
 	if err != nil {
