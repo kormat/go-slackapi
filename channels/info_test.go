@@ -25,7 +25,7 @@ func TestParseInfo(t *testing.T) {
 	tm.Eq("General flag", true, c.IsGeneral)
 	tm.Eq("Member flag", true, c.IsMember)
 	tm.Eq("Last read", 1462387257.000026, c.LastRead)
-	tm.Eq("Latest", latest{
+	tm.Eq("Latest", Latest{
 		"message", "U165E60A2", "<@U165T1UMT>: thank you for spotting that.",
 		1462387257.000026}, c.Latest)
 	tm.Eq("Unread count", 42, c.UnreadCount)

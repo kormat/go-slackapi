@@ -20,7 +20,7 @@ type ChannelInfo struct {
 	Purpose            TopicPurpose
 	IsMember           bool    `json:"is_member"`
 	LastRead           float64 `json:"last_read,string"`
-	Latest             latest
+	Latest             Latest
 	UnreadCount        int `json:"unread_count"`
 	UnreadCountDisplay int `json:"unread_count_display"`
 }
@@ -31,7 +31,7 @@ type TopicPurpose struct {
 	LastSet int `json:"last_set"`
 }
 
-type latest struct {
+type Latest struct {
 	Type string
 	User string
 	Text string

@@ -9,16 +9,20 @@ import (
 )
 
 type GroupInfo struct {
-	ID         string
-	Name       string
-	IsGroup    bool `json:"is_group"`
-	Created    int
-	Creator    string
-	IsArchived bool `json:"is_archived"`
-	IsMpim     bool `json:"is_mpim"`
-	Members    []string
-	Topic      channels.TopicPurpose
-	Purpose    channels.TopicPurpose
+	ID                 string
+	Name               string
+	IsGroup            bool `json:"is_group"`
+	Created            int
+	Creator            string
+	IsArchived         bool `json:"is_archived"`
+	IsMpim             bool `json:"is_mpim"`
+	Members            []string
+	Topic              channels.TopicPurpose
+	Purpose            channels.TopicPurpose
+	LastRead           float64 `json:"last_read,string"`
+	Latest             channels.Latest
+	UnreadCount        int `json:"unread_count"`
+	UnreadCountDisplay int `json:"unread_count_display"`
 }
 
 func Info(id string) (GroupInfo, error) {
