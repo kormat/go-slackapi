@@ -13,7 +13,7 @@ import (
 var client = &http.Client{}
 
 func Request(cmd string, v url.Values) (Response, error) {
-	u, err := CreateURL(cmd, v)
+	u, err := createURL(cmd, v)
 	if err != nil {
 		return Response{}, err
 	}
@@ -33,7 +33,7 @@ func Request(cmd string, v url.Values) (Response, error) {
 	return Parse(body)
 }
 
-func CreateURL(cmd string, v url.Values) (*url.URL, error) {
+func createURL(cmd string, v url.Values) (*url.URL, error) {
 	base := config.Cfg.APIEndpoint
 	if len(base) == 0 {
 		return nil, util.Error("API Endpoint url is empty")

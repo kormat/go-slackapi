@@ -20,7 +20,7 @@ func TestCreateUrl(t *testing.T) {
 			"http://api.endpoint/cmd1?p1=v1&p2=v2&token=tokeny"},
 	}
 	for i, c := range cases {
-		u, err := CreateURL(c.in_cmd, c.in_v)
+		u, err := createURL(c.in_cmd, c.in_v)
 		if err != nil {
 			t.Errorf("Error creating url: %v", err)
 			continue
