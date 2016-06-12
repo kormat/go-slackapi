@@ -29,7 +29,7 @@ func Request(cmd string, v url.Values) (Response, error) {
 	if err != nil {
 		return Response{}, util.ErrorLog("query: error reading http response body: %v", err)
 	}
-	glog.V(1).Infof("request: http response body:\n%s", body)
+	glog.V(3).Infof("request: http response body:\n%s", body)
 	return parseResponse(body)
 }
 
