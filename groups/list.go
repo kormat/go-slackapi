@@ -13,13 +13,13 @@ func List() ([]GroupInfo, error) {
 	}
 	groups, err := util.ParseJSONList(*resp.Groups)
 	if err != nil {
-		return []GroupInfo{}, util.Error("groups.list: %v", err)
+		return []GroupInfo{}, util.ErrorLog("groups.list: %v", err)
 	}
 	var infos []GroupInfo
 	for i, rawInfo := range groups {
 		c, err := parseInfo(rawInfo)
 		if err != nil {
-			return []GroupInfo{}, util.Error("Error parsing group %d", i)
+			return []GroupInfo{}, util.ErrorLog("Error parsing group %d", i)
 		}
 		infos = append(infos, c)
 	}

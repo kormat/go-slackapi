@@ -37,7 +37,7 @@ func Info(id string) (GroupInfo, error) {
 func parseInfo(raw []byte) (GroupInfo, error) {
 	var g GroupInfo
 	if err := util.ParseJSON(raw, &g); err != nil {
-		return GroupInfo{}, util.Error("groups.info: %v", err)
+		return GroupInfo{}, util.ErrorLog("groups.info: %v", err)
 	}
 	return g, nil
 }

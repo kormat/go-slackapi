@@ -26,10 +26,10 @@ func parseResponse(data []byte) (Response, error) {
 	var r Response
 	err := json.Unmarshal(data, &r)
 	if err != nil {
-		return Response{}, util.Error("query: unable to parse response json: %v", err)
+		return Response{}, util.ErrorLog("query: unable to parse response json: %v\n%s", err, data)
 	}
 	if r.Error != nil {
-		err = util.Error("query: api error: %s", *r.Error)
+		err = util.ErrorLog("query: api error: %s", *r.Error)
 	}
 	if r.Warning != nil {
 		glog.Warningf("query: api warning: %s", *r.Warning)

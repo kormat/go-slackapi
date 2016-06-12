@@ -13,13 +13,13 @@ func List() ([]ChannelInfo, error) {
 	}
 	chans, err := util.ParseJSONList(*resp.Channels)
 	if err != nil {
-		return []ChannelInfo{}, util.Error("channels.list: %v", err)
+		return []ChannelInfo{}, util.ErrorLog("channels.list: %v", err)
 	}
 	var infos []ChannelInfo
 	for i, rawInfo := range chans {
 		c, err := parseInfo(rawInfo)
 		if err != nil {
-			return []ChannelInfo{}, util.Error("Error parsing channel %d", i)
+			return []ChannelInfo{}, util.ErrorLog("Error parsing channel %d", i)
 		}
 		infos = append(infos, c)
 	}

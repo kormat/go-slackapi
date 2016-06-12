@@ -10,9 +10,9 @@ func ParseJSON(raw []byte, data interface{}) error {
 	case nil:
 		return nil
 	case *json.SyntaxError:
-		return Error("JSON syntax error at offset %d: %v", e.Offset, e)
+		return ErrorLog("JSON syntax error at offset %d: %v", e.Offset, e)
 	default:
-		return Error("Unrecognised JSON unmarshaling error: %v", e)
+		return ErrorLog("Unrecognised JSON unmarshaling error: %v", e)
 	}
 }
 

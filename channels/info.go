@@ -50,7 +50,7 @@ func Info(id string) (ChannelInfo, error) {
 func parseInfo(raw []byte) (ChannelInfo, error) {
 	var c ChannelInfo
 	if err := util.ParseJSON(raw, &c); err != nil {
-		return ChannelInfo{}, util.Error("channels.info: %v", err)
+		return ChannelInfo{}, util.ErrorLog("channels.info: %v", err)
 	}
 	return c, nil
 }

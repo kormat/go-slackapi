@@ -2,14 +2,14 @@
 
 GOFLAGS ?= $(GOFLAGS:)
 
-all: build install
+all: install deps
 
-
-build:
-	    @go build $(GOFLAGS) ./...
 
 install:
-	    @go get $(GOFLAGS) ./...
+	    @go install -v $(GOFLAGS) ./...
+
+deps:
+	    @go get -v $(GOFLAGS) ./...
 
 test: install
 	    @go test $(GOFLAGS) ./...

@@ -49,7 +49,7 @@ func Info(id string) (UserInfo, error) {
 func parseInfo(raw []byte) (UserInfo, error) {
 	var u UserInfo
 	if err := util.ParseJSON(raw, &u); err != nil {
-		return UserInfo{}, util.Error("users.info: %v", err)
+		return UserInfo{}, util.ErrorLog("users.info: %v", err)
 	}
 	return u, nil
 }
