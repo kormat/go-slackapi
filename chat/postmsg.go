@@ -1,14 +1,12 @@
 package chat
 
 import (
-	"fmt"
 	"github.com/kormat/go-slackapi/config"
 	"github.com/kormat/go-slackapi/query"
 )
 
-func PostMsg(user, msg string) error {
-	user = fmt.Sprintf("@%s", user)
+func PostMsg(target, msg string) error {
 	_, err := query.Request("chat.postMessage",
-		config.MakeURLValues(map[string]string{"channel": user, "text": msg}))
+		config.MakeURLValues(map[string]string{"channel": target, "text": msg}))
 	return err
 }
